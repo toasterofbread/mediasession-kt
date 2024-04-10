@@ -1,0 +1,14 @@
+headers = dbus/dbus.h
+headerFilter = dbus/*
+
+compilerOpts.linux = -I/usr/include -I/usr/include/x86_64-linux-gnu -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include
+linkerOpts.linux = -L/usr/lib/ -L/usr/lib/x86_64-linux-gnu -ldbus-1
+
+---
+
+#include <stdbool.h>
+
+void appendStringToDBusIter(DBusMessageIter* iter, const char* value) {
+    // Raises SIGSEGV when called directly from Kotlin, no idea why
+    dbus_message_iter_append_basic(iter, DBUS_TYPE_STRING, &value);
+}
