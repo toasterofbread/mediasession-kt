@@ -14,7 +14,7 @@ import kotlinx.cinterop.CFunction
 actual open class MediaSession: MediaSessionProperties {
     private var session_enabled: Boolean = false
     private var _art_url: String? = null
-    
+
     actual val enabled: Boolean
         get() = session_enabled
 
@@ -54,7 +54,7 @@ actual open class MediaSession: MediaSessionProperties {
 
     actual var onRaise: (() -> Unit)? = null
     actual var onQuit: (() -> Unit)? = null
-    
+
     actual var onNext: (() -> Unit)? = null
         set(value) {
             field = value
@@ -65,7 +65,7 @@ actual open class MediaSession: MediaSessionProperties {
             field = value
             libsmtc.setPreviousEnabled(if (value != null) 1 else 0)
         }
-    
+
     actual var onPause: (() -> Unit)? = null
     actual var onPlayPause: (() -> Unit)? = null
     actual var onStop: (() -> Unit)? = null
@@ -90,7 +90,7 @@ actual open class MediaSession: MediaSessionProperties {
         get() = emptyList()
     override val supported_mime_types: List<String>
         get() = emptyList()
-    override val loop_status: MediaSessionLoopMode
+    override val loop_mode: MediaSessionLoopMode
         get() = libsmtc.getLoop().toLoopMode()
     override val shuffle: Boolean
         get() = libsmtc.getShuffle() == 1
@@ -146,9 +146,9 @@ actual open class MediaSession: MediaSessionProperties {
 
     override fun setSupportedMimeTypes(supported_mime_types: List<String>) {}
 
-    override fun setLoopMode(loop_status: MediaSessionLoopMode) {
+    override fun setLoopMode(loop_mode: MediaSessionLoopMode) {
         libsmtc.setLoop(
-            when (loop_status) {
+            when (loop_mode) {
                 MediaSessionLoopMode.NONE -> 0U
                 MediaSessionLoopMode.ONE -> 1U
                 MediaSessionLoopMode.ALL -> 2U

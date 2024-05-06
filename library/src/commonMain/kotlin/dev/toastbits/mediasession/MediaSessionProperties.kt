@@ -18,7 +18,7 @@ interface MediaSessionProperties {
     fun setDesktopEntry(desktop_entry: String?)
     fun setSupportedUriSchemes(supported_uri_schemes: List<String>)
     fun setSupportedMimeTypes(supported_mime_types: List<String>)
-    fun setLoopMode(loop_status: MediaSessionLoopMode)
+    fun setLoopMode(loop_mode: MediaSessionLoopMode)
     fun setShuffle(shuffle: Boolean)
     fun setVolume(volume: Float)
     fun setRate(rate: Float)
