@@ -6,7 +6,6 @@ expect open class MediaSession(): MediaSessionProperties {
 
     var onRaise: (() -> Unit)?
     var onQuit: (() -> Unit)?
-    var onSetFullscreen: (() -> Unit)?
     var onNext: (() -> Unit)?
     var onPrevious: (() -> Unit)?
     var onPause: (() -> Unit)?
@@ -17,6 +16,8 @@ expect open class MediaSession(): MediaSessionProperties {
     var onSetPosition: ((to_ms: Long) -> Unit)?
     var onOpenUri: ((uri: String) -> Unit)?
     var onSetRate: ((rate: Float) -> Unit)?
+    var onSetLoop: ((loop_mode: MediaSessionLoopMode) -> Unit)?
+    var onSetShuffle: ((shuffle_mode: Boolean) -> Unit)?
 
     open fun getPositionMs(): Long
     fun onPositionChanged()

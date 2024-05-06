@@ -8,8 +8,10 @@ kotlin {
         withJava()
     }
 
-    linuxX64().apply {
-        binaries {
+    val native_targets = listOf(linuxX64(), mingwX64())
+
+    for (target in native_targets) {
+        target.binaries {
             executable {
                 entryPoint = "dev.toastbits.sample.main"
             }
@@ -26,8 +28,4 @@ kotlin {
 
         val jvmMain by getting
     }
-}
-
-application {
-    mainClass.set("dev.toastbits.sample.SampleKt")
 }

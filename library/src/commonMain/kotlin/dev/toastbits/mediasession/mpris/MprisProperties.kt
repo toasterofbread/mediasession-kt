@@ -12,7 +12,6 @@ abstract class MprisProperties {
 
     private val properties: MutableMap<MprisProperty, DBusVariant<*>?> =
         mutableMapOf(
-            MprisProperty.Fullscreen to createDBusVariant(false),
             MprisProperty.HasTrackList to createDBusVariant(false),
             MprisProperty.Identity to createDBusVariant("mediasessionkt"),
             MprisProperty.DesktopEntry to null,
@@ -33,7 +32,6 @@ abstract class MprisProperties {
             MprisProperty.Position -> createDBusVariant(session.getPositionMs() * 1000)
             MprisProperty.CanRaise -> createDBusVariant(session.onRaise != null)
             MprisProperty.CanQuit -> createDBusVariant(session.onQuit != null)
-            MprisProperty.CanSetFullscreen -> createDBusVariant(session.onSetFullscreen != null)
             MprisProperty.CanGoNext -> createDBusVariant(session.onNext != null)
             MprisProperty.CanGoPrevious -> createDBusVariant(session.onPrevious != null)
             MprisProperty.CanPlay -> createDBusVariant(session.onPlay != null)

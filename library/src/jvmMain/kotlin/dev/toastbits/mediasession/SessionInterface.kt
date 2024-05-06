@@ -70,11 +70,11 @@ internal class SessionInterface(
     override fun Play() {
         session.onPlay?.invoke()
     }
-    override fun Seek(by_us: Long) {
-        session.onSeek?.invoke(by_us / 1000L)
+    override fun Seek(by_ms: Long) {
+        session.onSeek?.invoke(by_ms)
     }
-    override fun SetPosition(arg0: DBusPath, to_us: Long) {
-        session.onSetPosition?.invoke(to_us / 1000L)
+    override fun SetPosition(arg0: DBusPath, to_ms: Long) {
+        session.onSetPosition?.invoke(to_ms)
     }
     override fun OpenUri(uri: String) {
         session.onOpenUri?.invoke(uri)

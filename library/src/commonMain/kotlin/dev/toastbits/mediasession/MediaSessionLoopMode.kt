@@ -1,5 +1,5 @@
 package dev.toastbits.mediasession
 
-enum class MediaSessionLoopStatus {
+enum class MediaSessionLoopMode {
     NONE, ONE, ALL
 }

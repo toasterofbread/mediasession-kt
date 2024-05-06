@@ -182,7 +182,6 @@ actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
 
     actual var onRaise: (() -> Unit)? = null
     actual var onQuit: (() -> Unit)? = null
-    actual var onSetFullscreen: (() -> Unit)? = null
     actual var onNext: (() -> Unit)? = null
     actual var onPrevious: (() -> Unit)? = null
     actual var onPause: (() -> Unit)? = null
@@ -193,6 +192,8 @@ actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
     actual var onSetPosition: ((to_ms: Long) -> Unit)? = null
     actual var onOpenUri: ((uri: String) -> Unit)? = null
     actual var onSetRate: ((rate: Float) -> Unit)? = null
+    actual var onSetLoop: ((loop_mode: MediaSessionLoopMode) -> Unit)? = null
+    actual var onSetShuffle: ((shuffle_mode: Boolean) -> Unit)? = null
 
     actual open fun getPositionMs(): Long = 0
 

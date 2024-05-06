@@ -3,7 +3,6 @@ package dev.toastbits.mediasession.mpris
 enum class MprisProperty {
     CanRaise,
     CanQuit,
-    CanSetFullscreen,
     CanGoNext,
     CanGoPrevious,
     CanPlay,
@@ -11,7 +10,6 @@ enum class MprisProperty {
     CanSeek,
     CanControl,
 
-    Fullscreen,
     HasTrackList,
     Identity,
     DesktopEntry,
@@ -30,8 +28,6 @@ enum class MprisProperty {
     fun getInterface(): MprisConstants.Interface =
         when (this) {
             CanQuit,
-            Fullscreen,
-            CanSetFullscreen,
             CanRaise,
             HasTrackList,
             Identity,

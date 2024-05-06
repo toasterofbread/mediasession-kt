@@ -15,7 +15,7 @@ data class MediaSessionMetadata(
     val content_created: String? = null,
     val disc_number: Int? = null,
     val first_used: String? = null,
-    val genre: List<String>? = null,
+    val genres: List<String>? = null,
     val last_used: String? = null,
     val lyricist: List<String>? = null,
     val title: String? = null,

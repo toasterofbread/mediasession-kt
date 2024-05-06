@@ -2,11 +2,16 @@
 
 A Kotlin Multiplatform library for emitting a system media session.
 
+Native Windows implementation adapted from [JavaMediaTransportControls](https://github.com/Selemba1000/JavaMediaTransportControls) by [Selemba1000](https://github.com/Selemba1000).
+
 ## Setup
 
 mediasession-kt currently supports the following Kotlin platforms:
-- Linux JVM (Windows support planned)
-- Native (Linux x86_64)
+- JVM 
+    - Linux (tested on x86_64 but should work on other architectures)
+- Native
+    - Linux x86_64
+    - Windows x86_64
 
 #### Gradle:
 
@@ -22,8 +27,9 @@ dependencyResolutionManagement {
 
 2. To your dependencies, add the line corresponding to the target platform (replace `<version>` with the desired mediasession-kt [version](https://github.com/toasterofbread/mediasession-kt/tags))
 
-- JVM (Kotlin/JVM): `implementation("dev.toastbits.mediasession:library-jvm:<version>")`
-- Linux x86_64 (Kotlin/Native): `implementation("dev.toastbits.mediasession:library-linuxx64:<version>")`
+- JVM: `implementation("dev.toastbits.mediasession:library-jvm:<version>")`
+- Native (Linux x86_64): `implementation("dev.toastbits.mediasession:library-linuxx64:<version>")`
+- Native (Windows x86_64): `implementation("dev.toastbits.mediasession:library-mingwx64:<version>")`
 
 ### Example usage
 

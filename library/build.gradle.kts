@@ -15,10 +15,7 @@ allprojects {
 }
 
 kotlin {
-    targetHierarchy.default()
-
     jvm()
-
     linuxX64().apply {
         compilations.getByName("main") {
             cinterops {
@@ -27,9 +24,25 @@ kotlin {
         }
     }
 
+    mingwX64().apply {
+        compilations.getByName("main") {
+            cinterops {
+                val libsmtc by creating {
+                    includeDirs(file("src/nativeInterop/mingw-x86_64/include"))
+                    extraOpts("-libraryPath", file("src/nativeInterop/mingw-x86_64/thirdparty/libsmtc/build").absolutePath)
+                }
+            }
+        }
+    }
+
+    applyDefaultHierarchyTemplate()
+
     sourceSets {
         all {
-            languageSettings.optIn("kotlinx.cinterop.ExperimentalForeignApi")
+            languageSettings.apply {
+                optIn("kotlinx.cinterop.ExperimentalForeignApi")
+                enableLanguageFeature("ExpectActualClasses")
+            }
         }
 
         val commonMain by getting {
@@ -85,4 +98,8 @@ mavenPublishing {
             url.set("https://github.com/toasterofbread/mediasession-kt/issues")
         }
     }
+}
+
+tasks.configureEach {
+    notCompatibleWithConfigurationCache("https://github.com/Kotlin/dokka/issues/2231")
 }

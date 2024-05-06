@@ -1,0 +1,6 @@
+headers = libSMTCAdapter.h
+
+staticLibraries = libSMTCAdapter.a libmincore.a libstdc++.a
+libraryPaths = /usr/x86_64-w64-mingw32/lib/ C:/msys64/mingw64/lib
+
+linkerOpts.mingw = -static -lssp -fstack-protector
