@@ -8,6 +8,7 @@ import org.freedesktop.dbus.connections.impl.DBusConnection
 import org.freedesktop.dbus.interfaces.Properties
 import org.freedesktop.dbus.types.Variant
 import dev.toastbits.mediasession.mpris.MprisProperty
+import dev.toastbits.mediasession.mpris.fromMprisLoopMode
 
 internal class SessionInterface(
     override val session: MediaSession,
@@ -34,6 +35,18 @@ internal class SessionInterface(
     }
 
     override fun <A> Set(interface_name: String, property_name: String, value: A) {
+        when (property_name) {
+            "LoopStatus" -> {
+                session.onSetLoop?.invoke((value as String).fromMprisLoopMode())
+            }
+            "Shuffle" -> {
+                session.onSetShuffle?.invoke(value as Boolean)
+            }
+            "Rate" -> {
+                session.onSetRate?.invoke((value as Double).toFloat())
+            }
+        }
+
         val property: MprisProperty =
             MprisProperty.entries.firstOrNull { it.name == property_name } ?: return
         onPropertySet(property, Variant(value))
