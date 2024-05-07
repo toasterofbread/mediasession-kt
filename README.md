@@ -7,7 +7,7 @@ Native Windows implementation adapted from [JavaMediaTransportControls](https://
 ## Setup
 
 mediasession-kt currently supports the following Kotlin platforms:
-- JVM 
+- JVM
     - Linux (tested on x86_64 but should work on other architectures)
 - Native
     - Linux x86_64
@@ -18,10 +18,8 @@ mediasession-kt currently supports the following Kotlin platforms:
 1. Add the Maven Central repository to your dependency resolution configuration
 
 ```
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
+repositories {
+    mavenCentral()
 }
 ```
 
