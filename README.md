@@ -2,13 +2,14 @@
 
 A Kotlin Multiplatform library for emitting a system media session.
 
-Native Windows implementation adapted from [JavaMediaTransportControls](https://github.com/Selemba1000/JavaMediaTransportControls) by [Selemba1000](https://github.com/Selemba1000).
+Windows implementation adapted from [JavaMediaTransportControls](https://github.com/Selemba1000/JavaMediaTransportControls) by [Selemba1000](https://github.com/Selemba1000).
 
 ## Setup
 
 mediasession-kt currently supports the following Kotlin platforms:
-- JVM
-    - Linux (tested on x86_64 but should work on other architectures)
+- JVM (tested on x86_64 but may work on other architectures)
+    - Linux
+    - Windows
 - Native
     - Linux x86_64
     - Windows x86_64
@@ -36,9 +37,9 @@ var time = TimeSource.Monotonic.markNow()
 
 // Initialise the media session
 val session: MediaSession =
-    object : MediaSession() {
-        override fun getPositionMs(): Long = time.elapsedNow().inWholeMilliseconds
-    }
+    MediaSession.create(
+        getPositionMs = { time.elapsedNow().inWholeMilliseconds }
+    )!!
 
 // Set callbacks
 session.onPlay = {
