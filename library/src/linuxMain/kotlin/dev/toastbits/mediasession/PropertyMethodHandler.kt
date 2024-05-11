@@ -29,7 +29,7 @@ import libdbus.dbus_message_iter_get_basic
 import libdbus.dbus_message_iter_next
 import libdbus.dbus_message_iter_recurse
 
-internal class PropertyMethodHandler(val session: MediaSession): MethodHandler {
+internal class PropertyMethodHandler(val session: LinuxMediaSession): MethodHandler {
     override fun getConnection(): CPointer<DBusConnection> = session.connection
 
     override fun processMethod(method: String, message: CValuesRef<DBusMessage>) {

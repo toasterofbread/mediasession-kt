@@ -1,6 +1,6 @@
 package dev.toastbits.mediasession
 
-expect open class MediaSession(): MediaSessionProperties {
+interface MediaSession: MediaSessionProperties {
     val enabled: Boolean
     fun setEnabled(enabled: Boolean)
 
@@ -19,6 +19,12 @@ expect open class MediaSession(): MediaSessionProperties {
     var onSetLoop: ((loop_mode: MediaSessionLoopMode) -> Unit)?
     var onSetShuffle: ((shuffle_mode: Boolean) -> Unit)?
 
-    open fun getPositionMs(): Long
+    fun getPositionMs(): Long = 0
     fun onPositionChanged()
+
+    companion object {
+        fun create(getPositionMs: (() -> Long)? = null): MediaSession? = createMediaSession(getPositionMs)
+    }
 }
+
+expect fun createMediaSession(getPositionMs: (() -> Long)? = null): MediaSession?

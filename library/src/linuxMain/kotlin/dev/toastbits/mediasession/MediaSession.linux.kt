@@ -52,7 +52,12 @@ import libdbus.dbus_message_new_signal
 import libdbus.dbus_message_unref
 import dev.toastbits.mediasession.mpris.createDBusVariant
 
-actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
+actual fun createMediaSession(getPositionMs: (() -> Long)?): MediaSession? = 
+    object : LinuxMediaSession() {
+        override fun getPositionMs(): Long = getPositionMs?.invoke() ?: super.getPositionMs()
+    }
+
+open class LinuxMediaSession: MprisMediaSession(), MediaSession, MediaSessionProperties {
     private var session_enabled: Boolean = false
     private val method_handlers: Map<String, MethodHandler> =
         MprisConstants.Interface.entries.associate { mpris_interface ->
@@ -73,8 +78,8 @@ actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
 
     override val properties: MprisProperties =
         object : MprisProperties() {
-            override val session: MediaSession
-                get() = this@MediaSession
+            override val session: LinuxMediaSession
+                get() = this@LinuxMediaSession
 
             override fun emitPropertyChange(property: MprisProperty, value: DBusVariant<*>?) {
                 if (!enabled) {
@@ -114,7 +119,7 @@ actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
             }
         }
 
-    actual val enabled: Boolean
+    override val enabled: Boolean
         get() = session_enabled
 
     init {
@@ -129,10 +134,10 @@ actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
             }
         }
 
-        this@MediaSession.connection = connection ?: throw NullPointerException("Connection is null")
+        this@LinuxMediaSession.connection = connection ?: throw NullPointerException("Connection is null")
     }
 
-    actual fun setEnabled(enabled: Boolean) {
+    override fun setEnabled(enabled: Boolean) {
         if (enabled == session_enabled) {
             return
         }
@@ -180,24 +185,22 @@ actual open class MediaSession: MprisMediaSession(), MediaSessionProperties {
         }
     }
 
-    actual var onRaise: (() -> Unit)? = null
-    actual var onQuit: (() -> Unit)? = null
-    actual var onNext: (() -> Unit)? = null
-    actual var onPrevious: (() -> Unit)? = null
-    actual var onPause: (() -> Unit)? = null
-    actual var onPlayPause: (() -> Unit)? = null
-    actual var onStop: (() -> Unit)? = null
-    actual var onPlay: (() -> Unit)? = null
-    actual var onSeek: ((by_ms: Long) -> Unit)? = null
-    actual var onSetPosition: ((to_ms: Long) -> Unit)? = null
-    actual var onOpenUri: ((uri: String) -> Unit)? = null
-    actual var onSetRate: ((rate: Float) -> Unit)? = null
-    actual var onSetLoop: ((loop_mode: MediaSessionLoopMode) -> Unit)? = null
-    actual var onSetShuffle: ((shuffle_mode: Boolean) -> Unit)? = null
+    override var onRaise: (() -> Unit)? = null
+    override var onQuit: (() -> Unit)? = null
+    override var onNext: (() -> Unit)? = null
+    override var onPrevious: (() -> Unit)? = null
+    override var onPause: (() -> Unit)? = null
+    override var onPlayPause: (() -> Unit)? = null
+    override var onStop: (() -> Unit)? = null
+    override var onPlay: (() -> Unit)? = null
+    override var onSeek: ((by_ms: Long) -> Unit)? = null
+    override var onSetPosition: ((to_ms: Long) -> Unit)? = null
+    override var onOpenUri: ((uri: String) -> Unit)? = null
+    override var onSetRate: ((rate: Float) -> Unit)? = null
+    override var onSetLoop: ((loop_mode: MediaSessionLoopMode) -> Unit)? = null
+    override var onSetShuffle: ((shuffle_mode: Boolean) -> Unit)? = null
 
-    actual open fun getPositionMs(): Long = 0
-
-    actual fun onPositionChanged() = memScoped {
+    override fun onPositionChanged() = memScoped {
         val message: CPointer<DBusMessage> =
             dbus_message_new_signal(
                 MprisConstants.OBJECT_PATH,

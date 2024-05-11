@@ -11,12 +11,12 @@ import kotlin.time.TimeSource
 fun main() {
     var time = TimeSource.Monotonic.markNow()
 
-    val session: MediaSession =
-        object : MediaSession() {
-            override fun getPositionMs(): Long {
-                return time.elapsedNow().inWholeMilliseconds
-            }
-        }
+    val session: MediaSession? =
+        MediaSession.create(
+            getPositionMs = { time.elapsedNow().inWholeMilliseconds }
+        )
+
+    checkNotNull(session) { "Session not available on current platform" }
 
     var playing: Boolean = true
 

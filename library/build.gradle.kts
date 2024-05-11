@@ -16,6 +16,7 @@ allprojects {
 
 kotlin {
     jvm()
+
     linuxX64().apply {
         compilations.getByName("main") {
             cinterops {
@@ -55,9 +56,25 @@ kotlin {
             dependencies {
                 implementation("com.github.hypfvieh:dbus-java-core:5.0.0")
                 implementation("com.github.hypfvieh:dbus-java-transport-jnr-unixsocket:5.0.0")
+                implementation("net.java.dev.jna:jna:5.14.0")
             }
         }
     }
+}
+
+tasks.register<Copy>("copyX86Dll") {
+    from("src/nativeInterop/mingw-x86_64/thirdparty/libsmtc/build/libSMTCAdapter.dll")
+    into("src/jvmMain/resources/win32-x86")
+}
+
+tasks.register<Copy>("copyX64Dll") {
+    from("src/nativeInterop/mingw-x86_64/thirdparty/libsmtc/build/libSMTCAdapter.dll")
+    into("src/jvmMain/resources/win32-x86-64")
+}
+
+tasks.getByName("jvmProcessResources") {
+    dependsOn("copyX86Dll")
+    dependsOn("copyX64Dll")
 }
 
 mavenPublishing {
@@ -98,8 +115,4 @@ mavenPublishing {
             url.set("https://github.com/toasterofbread/mediasession-kt/issues")
         }
     }
-}
-
-tasks.configureEach {
-    notCompatibleWithConfigurationCache("https://github.com/Kotlin/dokka/issues/2231")
 }

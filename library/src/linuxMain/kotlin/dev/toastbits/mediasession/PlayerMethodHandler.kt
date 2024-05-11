@@ -20,7 +20,7 @@ import libdbus.DBUS_TYPE_STRING
 import libdbus.DBusError
 import libdbus.dbus_message_get_args
 
-internal class PlayerMethodHandler(val session: MediaSession): MethodHandler {
+internal class PlayerMethodHandler(val session: LinuxMediaSession): MethodHandler {
     override fun getConnection(): CPointer<DBusConnection> = session.connection
 
     override fun processMethod(method_name: String, message: CValuesRef<DBusMessage>) {

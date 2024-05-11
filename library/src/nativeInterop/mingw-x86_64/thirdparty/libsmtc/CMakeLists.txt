@@ -124,7 +124,14 @@ set(ALL_FILES
 ################################################################################
 # Target
 ################################################################################
-add_library(${PROJECT_NAME} STATIC ${ALL_FILES})
+
+if(BUILD_STATIC)
+    add_library(${PROJECT_NAME} STATIC ${ALL_FILES})
+else()
+    add_library(${PROJECT_NAME} SHARED ${ALL_FILES})
+    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".dll")
+    target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ -static)
+endif()
 
 target_link_libraries(${PROJECT_NAME} mincore)
 

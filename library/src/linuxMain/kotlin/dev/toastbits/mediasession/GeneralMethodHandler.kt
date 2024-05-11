@@ -5,7 +5,7 @@ import cnames.structs.DBusMessage
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.CValuesRef
 
-internal class GeneralMethodHandler(val session: MediaSession): MethodHandler {
+internal class GeneralMethodHandler(val session: LinuxMediaSession): MethodHandler {
     override fun getConnection(): CPointer<DBusConnection> = session.connection
 
     override fun processMethod(method: String, message: CValuesRef<DBusMessage>) {
