@@ -8,7 +8,7 @@ kotlin {
         withJava()
     }
 
-    val native_targets = listOf(linuxX64(), mingwX64())
+    val native_targets = listOf(linuxX64(), linuxArm64(), mingwX64())
 
     for (target in native_targets) {
         target.binaries {

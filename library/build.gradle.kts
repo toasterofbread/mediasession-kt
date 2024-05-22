@@ -1,6 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.JavadocJar
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
@@ -9,16 +10,12 @@ plugins {
     kotlin("plugin.serialization") version "1.9.22"
 }
 
-allprojects {
-    group = "dev.toastbits.mediasession"
-    version = "0.1.0"
-}
-
 kotlin {
     jvm()
 
-    linuxX64().apply {
-        compilations.getByName("main") {
+    val linux_targets: List<KotlinNativeTarget> = listOf(linuxX64(), linuxArm64())
+    for (target in linux_targets) {
+        target.compilations.getByName("main") {
             cinterops {
                 val libdbus by creating
             }
@@ -78,6 +75,8 @@ tasks.getByName("jvmProcessResources") {
 }
 
 mavenPublishing {
+    coordinates("dev.toastbits", "mediasession", "0.1.1")
+
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
 

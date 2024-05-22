@@ -23,8 +23,8 @@ import libdbus.dbus_message_get_args
 internal class PlayerMethodHandler(val session: LinuxMediaSession): MethodHandler {
     override fun getConnection(): CPointer<DBusConnection> = session.connection
 
-    override fun processMethod(method_name: String, message: CValuesRef<DBusMessage>) {
-        when (method_name) {
+    override fun processMethod(method: String, message: CValuesRef<DBusMessage>) {
+        when (method) {
             "Next" -> session.onNext?.invoke()
             "Previous" -> session.onPrevious?.invoke()
             "Pause" -> session.onPause?.invoke()
@@ -69,7 +69,7 @@ internal class PlayerMethodHandler(val session: LinuxMediaSession): MethodHandle
                 }
             }
             else -> {
-                replyToUnknownMethod(method_name, message)
+                replyToUnknownMethod(method, message)
                 return
             }
         }

@@ -12,6 +12,7 @@ mediasession-kt currently supports the following Kotlin platforms:
     - Windows
 - Native
     - Linux x86_64
+    - Linux ARM64
     - Windows x86_64
 
 #### Gradle:
@@ -24,11 +25,11 @@ repositories {
 }
 ```
 
-2. To your dependencies, add the line corresponding to the target platform (replace `<version>` with the desired mediasession-kt [version](https://github.com/toasterofbread/mediasession-kt/tags))
+2. Add the following line to your dependencies (replace `<version>` with the desired mediasession-kt [version](https://github.com/toasterofbread/mediasession-kt/tags))
 
-- JVM: `implementation("dev.toastbits.mediasession:library-jvm:<version>")`
-- Native (Linux x86_64): `implementation("dev.toastbits.mediasession:library-linuxx64:<version>")`
-- Native (Windows x86_64): `implementation("dev.toastbits.mediasession:library-mingwx64:<version>")`
+```
+implementation("dev.toastbits:mediasession:<version>")
+```
 
 ### Example usage
 
